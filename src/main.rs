@@ -27,9 +27,11 @@ mod day25;
 
 
 fn main() {
-    let arg = std::env::args().skip(1).next();
-    if let Some(arg) = arg {
-        match arg.as_str() {
+    let mut args = std::env::args().skip(1);
+	let mut has_args = false;
+	while let Some(arg) = args.next() {
+		has_args = true;
+		match arg.as_str() {
 			"1" => day1::run(include_str!("input/day1.txt")),
 			"2" => day2::run(include_str!("input/day2.txt")),
 			"3" => day3::run(include_str!("input/day3.txt")),
@@ -57,7 +59,8 @@ fn main() {
 			"25" => day25::run(include_str!("input/day25.txt")),
 		_ => panic!("Invalid day input!")
         }
-    } else {
+	}
+    if !has_args {
 		day1::run(include_str!("input/day1.txt"));
 		day2::run(include_str!("input/day2.txt"));
 		day3::run(include_str!("input/day3.txt"));
