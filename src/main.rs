@@ -1,4 +1,3 @@
-
 mod day1;
 mod day2;
 mod day3;
@@ -25,66 +24,76 @@ mod day23;
 mod day24;
 mod day25;
 
-
 fn main() {
+    let funcs = [
+		day1::run,
+		day2::run,
+		day3::run,
+		day4::run,
+		day5::run,
+		day6::run,
+		day7::run,
+		day8::run,
+		day9::run,
+		day10::run,
+		day11::run,
+		day12::run,
+		day13::run,
+		day14::run,
+		day15::run,
+		day16::run,
+		day17::run,
+		day18::run,
+		day19::run,
+		day20::run,
+		day21::run,
+		day22::run,
+		day23::run,
+		day24::run,
+		day25::run,
+
+    ];
+    let inputs = [
+		include_str!("input/day1.txt"),
+		include_str!("input/day2.txt"),
+		include_str!("input/day3.txt"),
+		include_str!("input/day4.txt"),
+		include_str!("input/day5.txt"),
+		include_str!("input/day6.txt"),
+		include_str!("input/day7.txt"),
+		include_str!("input/day8.txt"),
+		include_str!("input/day9.txt"),
+		include_str!("input/day10.txt"),
+		include_str!("input/day11.txt"),
+		include_str!("input/day12.txt"),
+		include_str!("input/day13.txt"),
+		include_str!("input/day14.txt"),
+		include_str!("input/day15.txt"),
+		include_str!("input/day16.txt"),
+		include_str!("input/day17.txt"),
+		include_str!("input/day18.txt"),
+		include_str!("input/day19.txt"),
+		include_str!("input/day20.txt"),
+		include_str!("input/day21.txt"),
+		include_str!("input/day22.txt"),
+		include_str!("input/day23.txt"),
+		include_str!("input/day24.txt"),
+		include_str!("input/day25.txt"),
+
+    ];
+
     let mut args = std::env::args().skip(1);
-	let mut has_args = false;
-	while let Some(arg) = args.next() {
-		has_args = true;
-		match arg.as_str() {
-			"1" => day1::run(include_str!("input/day1.txt")),
-			"2" => day2::run(include_str!("input/day2.txt")),
-			"3" => day3::run(include_str!("input/day3.txt")),
-			"4" => day4::run(include_str!("input/day4.txt")),
-			"5" => day5::run(include_str!("input/day5.txt")),
-			"6" => day6::run(include_str!("input/day6.txt")),
-			"7" => day7::run(include_str!("input/day7.txt")),
-			"8" => day8::run(include_str!("input/day8.txt")),
-			"9" => day9::run(include_str!("input/day9.txt")),
-			"10" => day10::run(include_str!("input/day10.txt")),
-			"11" => day11::run(include_str!("input/day11.txt")),
-			"12" => day12::run(include_str!("input/day12.txt")),
-			"13" => day13::run(include_str!("input/day13.txt")),
-			"14" => day14::run(include_str!("input/day14.txt")),
-			"15" => day15::run(include_str!("input/day15.txt")),
-			"16" => day16::run(include_str!("input/day16.txt")),
-			"17" => day17::run(include_str!("input/day17.txt")),
-			"18" => day18::run(include_str!("input/day18.txt")),
-			"19" => day19::run(include_str!("input/day19.txt")),
-			"20" => day20::run(include_str!("input/day20.txt")),
-			"21" => day21::run(include_str!("input/day21.txt")),
-			"22" => day22::run(include_str!("input/day22.txt")),
-			"23" => day23::run(include_str!("input/day23.txt")),
-			"24" => day24::run(include_str!("input/day24.txt")),
-			"25" => day25::run(include_str!("input/day25.txt")),
-		_ => panic!("Invalid day input!")
+    let mut has_args = false;
+    while let Some(arg) = args.next() {
+        has_args = true;
+        match arg.as_str().parse().expect("Could not parse day input") {
+            day@1..=25 => funcs[day-1](inputs[day-1]),
+            _ => panic!("Invalid day")
         }
-	}
+    }
     if !has_args {
-		day1::run(include_str!("input/day1.txt"));
-		day2::run(include_str!("input/day2.txt"));
-		day3::run(include_str!("input/day3.txt"));
-		day4::run(include_str!("input/day4.txt"));
-		day5::run(include_str!("input/day5.txt"));
-		day6::run(include_str!("input/day6.txt"));
-		day7::run(include_str!("input/day7.txt"));
-		day8::run(include_str!("input/day8.txt"));
-		day9::run(include_str!("input/day9.txt"));
-		day10::run(include_str!("input/day10.txt"));
-		day11::run(include_str!("input/day11.txt"));
-		day12::run(include_str!("input/day12.txt"));
-		day13::run(include_str!("input/day13.txt"));
-		day14::run(include_str!("input/day14.txt"));
-		day15::run(include_str!("input/day15.txt"));
-		day16::run(include_str!("input/day16.txt"));
-		day17::run(include_str!("input/day17.txt"));
-		day18::run(include_str!("input/day18.txt"));
-		day19::run(include_str!("input/day19.txt"));
-		day20::run(include_str!("input/day20.txt"));
-		day21::run(include_str!("input/day21.txt"));
-		day22::run(include_str!("input/day22.txt"));
-		day23::run(include_str!("input/day23.txt"));
-		day24::run(include_str!("input/day24.txt"));
-		day25::run(include_str!("input/day25.txt"));
-	}
+        for day in 0..=24 {
+            funcs[day](inputs[day])
+        }
+    }
 }

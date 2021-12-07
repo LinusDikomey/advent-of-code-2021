@@ -2,10 +2,10 @@
 import os
 
 mods = ""
-days = ""
-day_pats = ""
+funcs = ""
+inputs = ""
 
-if input('This will override files in the src directory. Type "generate" to proceed at your own risk: ') != 'generate':
+if input('This will override files in the src directory. Type "override" to proceed at your own risk: ') != 'override':
     print('Cancelling execution')
     exit()
 
@@ -14,8 +14,8 @@ if not os.path.exists("src/input"):
 
 for i in range(1, 26):
     mods += f"mod day{i};\n"
-    days += f'\t\tday{i}::run(include_str!("input/day{i}.txt"));\n'
-    day_pats += f'\t\t\t"{i}" => day{i}::run(include_str!("input/day{i}.txt")),\n'
+    funcs += f'\t\tday{i}::run,\n'
+    inputs += f'\t\tinclude_str!("input/day{i}.txt"),\n'
     f = open(f"src/day{i}.rs", 'w+')
     f.write(f"""pub fn run(_input: &str) {{
     println!("Day {i}:");
@@ -29,16 +29,28 @@ for i in range(1, 26):
     input = open(f"src/input/day{i}.txt", 'w+')
 
 main = open("src/main.rs", 'w+')
-main.write(f"""
-{mods}
-
+main.write(f"""{mods}
 fn main() {{
-    let arg = std::env::args().skip(1).next();
-    if let Some(arg) = arg {{
-        match arg.as_str() {{
-{day_pats}\t\t_ => panic!("Invalid day input!")
+    let funcs = [
+{funcs}
+    ];
+    let inputs = [
+{inputs}
+    ];
+
+    let mut args = std::env::args().skip(1);
+    let mut has_args = false;
+    while let Some(arg) = args.next() {{
+        has_args = true;
+        match arg.as_str().parse().expect("Could not parse day input") {{
+            day@1..=25 => funcs[day-1](inputs[day-1]),
+            _ => panic!("Invalid day")
         }}
-    }} else {{
-{days}\t}}
+    }}
+    if !has_args {{
+        for day in 0..=24 {{
+            funcs[day](inputs[day])
+        }}
+    }}
 }}
 """)
