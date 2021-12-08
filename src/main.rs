@@ -1,3 +1,5 @@
+#![feature(drain_filter)]
+
 mod day1;
 mod day2;
 mod day3;
